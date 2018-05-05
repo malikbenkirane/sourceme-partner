@@ -1,0 +1,1 @@
+/home/void/recess/ports/gruvbox-contrib/st/scripts/gruv.sh

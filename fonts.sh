@@ -1,5 +1,6 @@
 # font utilities
 # --------------
+# FIXME font setters do not update the file `.fovim`
 
 font_defaults() {
     local defaults
@@ -14,11 +15,15 @@ font_defaults() {
         fi
     fi
     if [ "$fontname" ]; then
-        fontname=$(echo $fontname|sed 's/ /\\ /')
+        fontname=$(echo $fontname|sed 's/ /\\ /g')
         if [ "$fontsize" ]; then
             fontsize="\\ $fontsize"
         fi
-        echo "let gtkfonts='$fontname$fontsize'" > $HOME/.fovim
+        (
+        echo "if has(\"gui_running\")"
+        echo "  set guifont=$fontname$fontsize"
+        echo "endif"
+        )> $HOME/.fovim
     fi
 }
 
@@ -71,7 +76,7 @@ fs() {
     elif echo $1 | grep -v "^[0-9][0-9]\?" > /dev/null; then
         font_default_size
         # echo "> Give only font size"
-        return 
+        return
     fi
     local arg=$@
     if [ "$arg" ]; then

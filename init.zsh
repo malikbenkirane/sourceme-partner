@@ -1,3 +1,5 @@
+#!/bin/zsh
+# sourceme
 SOURCMEDIR=$HOME/.local/sourceme/
 
 sourceme() {
